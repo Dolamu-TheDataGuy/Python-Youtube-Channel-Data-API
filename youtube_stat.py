@@ -29,6 +29,23 @@ class YoutubeStats:
         # get video ids
         channel_videos = self._get_channel_videos(limit=50) # line of code automatically outputs the url despite not printing channel_videos, print(outputs channel vs return (doesnt output anything)
         print(channel_videos)
+        # Loop through dictionaries
+        parts = ["snippet", "statistics", "contentDetails"]
+        for video_id in channel_videos:
+            for part in parts:
+                data = self._get_single_video_data(video_id, part)
+
+            
+    def _get_single_video_data(self, video_id, part):
+        url = f"https://www.googleapis.com/youtube/v3/videos?part={part}&id={video_id}&key={self.api_key}"
+        json_url = requests.get(url)
+        data = json.dumps(json_url.text)
+        try:
+            data = data["items"][part]
+        except:
+            print("Error content not found!")
+
+
 
 
         # get video statistics, #TODO 
