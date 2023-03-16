@@ -1,6 +1,6 @@
 import requests
 import json
-
+from tqdm import tqdm
 class YoutubeStats:
 
     def __init__(self, api_key, channel_id):
@@ -31,9 +31,11 @@ class YoutubeStats:
         print(channel_videos)
         # Loop through dictionaries
         parts = ["snippet", "statistics", "contentDetails"]
-        for video_id in channel_videos:
+        for video_id in tqdm(channel_videos):
             for part in parts:
                 data = self._get_single_video_data(video_id, part)
+                channel_videos[video_id].update(data)
+        self.video_data = channel_videos
 
             
     def _get_single_video_data(self, video_id, part):
@@ -44,6 +46,9 @@ class YoutubeStats:
             data = data["items"][part]
         except:
             print("Error content not found!")
+            data = {}
+        return data
+
 
 
 
