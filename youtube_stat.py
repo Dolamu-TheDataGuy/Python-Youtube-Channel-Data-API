@@ -5,6 +5,9 @@ import keys
 
 
 class YoutubeStats:
+    """
+    Program to extract youtube channel video statistics and data
+    """
 
     def  __init__(self, api_key, channel_id):
         self.api_key = api_key
@@ -13,6 +16,8 @@ class YoutubeStats:
         self.video_data = None
 
     def get_channel_statistics(self):
+        """Function that obtains channel statistics
+        """
         url = f"https://www.googleapis.com/youtube/v3/channels?part=statistics&id={self.channel_id}&key={self.api_key}"
         json_url = requests.get(url)
         data = json.loads(json_url.text)
@@ -26,6 +31,9 @@ class YoutubeStats:
         return data
     
     def get_channel_video_statistics(self):
+        """
+        Function that obtains video data based on part(snippet, statistics, contentDetails)
+        """
         channel_videos = self.get_channel_video(limit=50)
         # get video statistics
         parts = ['snippet', 'statistics', 'contentDetails']
@@ -39,6 +47,11 @@ class YoutubeStats:
 
         
     def get_single_video_data(self, video_id, part):
+        """
+        Helper function that gets data in form of a dictionary for each video
+        based on part
+
+        """
         url = f"https://www.googleapis.com/youtube/v3/videos?part={part}&id={video_id}&key={self.api_key}"
         json_url = requests.get(url)
         data = json.loads(json_url.text) # convert to python object 
@@ -52,9 +65,10 @@ class YoutubeStats:
 
 
 
-
-
     def get_channel_video(self, limit=None):
+        """
+        Function that uses concept of pagination to obtain videos in the channel
+        """
         url = f"https://www.googleapis.com/youtube/v3/search?key={self.api_key}&channelId={self.channel_id}&part=id&order=date"
     
         if limit is not None and isinstance(limit, int):
@@ -71,6 +85,9 @@ class YoutubeStats:
 
 
     def _get_channel_video_id_per_page(self, url):
+        """
+        Function that video_id for videos on the channel and nextpageToken on API
+        """
         json_url = requests.get(url)
         data = json.loads(json_url.text)
         channel_video = {} # dictionary that will hold channel video information
@@ -93,7 +110,10 @@ class YoutubeStats:
 
     
     def dump(self):
-        """Function that writes channel and video data into a json file"""
+        """
+        Function that writes channel and video data into a json file
+        
+        """
         if self.channel_statistics is None or self.video_data is None:
             print("Data is None")
             return
