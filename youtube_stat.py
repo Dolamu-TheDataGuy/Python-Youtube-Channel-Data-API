@@ -20,7 +20,7 @@ class YoutubeStats:
         """
         url = f"https://www.googleapis.com/youtube/v3/channels?part=statistics&id={self.channel_id}&key={self.api_key}"
         json_url = requests.get(url)
-        data = json.loads(json_url.text)
+        data = json.loads(json_url.text) # loads - convert from json to python object
         
         try:
             data = data['items'][0]['statistics'] # even if the content of a list is just 1 the index which is 0 must be referenced
@@ -126,7 +126,7 @@ class YoutubeStats:
         channel_title = channel_title.replace(" ", "_").lower()
         file_name = channel_title + ".json"
         with open(file_name, mode="w") as f:
-            json.dump(merged_data, f, indent=4) # indent for proper styling of json file
+            json.dump(merged_data, f, indent=4) #  dump - convert from python object to json file, indent argument for proper styling of json file
         
         print("file dumped")
     
