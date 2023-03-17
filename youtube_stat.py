@@ -101,11 +101,13 @@ class YoutubeStats:
         merged_data = {self.channel_id:{"channel_statistics": self.channel_statistics, "video_data": self.video_data }}
 
         # process to create filename
-        channel_title = "Python Engineer"  #TODO: GET CHANNEL NAME FROM API
+        channel_title = self.video_data.popitem()[1].get("channelTitle", self.channel_id) # pppitem() randomly outputs a tuple of key and value, key(channelid), value (other properties)
+        print(channel_title)
         channel_title = channel_title.replace(" ", "_").lower()
         file_name = channel_title + ".json"
         with open(file_name, mode="w") as f:
-            json.dump(self.channel_statistics, f, indent=4) # indent for proper styling of json file
+            json.dump(merged_data, f, indent=4) # indent for proper styling of json file
+        
         print("file dumped")
     
 

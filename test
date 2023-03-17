@@ -1,0 +1,5 @@
+dex = {"video": {2}}
+
+dex['video'].update({5})
+
+print(dex)
