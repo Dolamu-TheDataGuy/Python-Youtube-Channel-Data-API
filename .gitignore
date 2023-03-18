@@ -3,3 +3,5 @@ venv
 # API Details
 keys.*
 
+# images folder
+images
