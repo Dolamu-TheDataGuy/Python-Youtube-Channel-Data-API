@@ -1,5 +1,7 @@
 # YouTube API Project
 
+<img src="./images/Skillup.png">
+
 <p align='justify'>A project that assessess youtube Data using the YOUTUBE Data API, a particular youtube channel is picked for the purpose of this project based on the `channelID` of the channel, and information regarding the channel statistics is derived using URL's provided on the youtube API site. The workflow for the project is visualize below.</p>
 
 <img src="./images/Youtube_workflow.png">
